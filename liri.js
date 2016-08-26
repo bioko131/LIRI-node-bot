@@ -86,30 +86,25 @@ var movieDefault = "Mr.Nobody";
 var url = 'http://www.omdbapi.com/?t=' + movieName + '&y=&plot=short&r=json';
 var urlDefault = 'http://www.omdbapi.com/?t=' + movieDefault + '&y=&plot=short&r=json';
 
-
- if (movieName == true){
+  // if the user entered
+ if (movieName != null) {
     request(url, function (error, response, body) {
 
       //console.log(body);
-      // If the request is successful (i.e. if the response status code is 200)
+      // If the request is successful
       if (!error && response.statusCode == 200) {
+              // Parse the body and pull for each attribute
+              console.log("Title: " + value);
+              console.log("Year: " + JSON.parse(body)["Year"]);
+              console.log("Rating: " + JSON.parse(body)["imdbRating"]);
+              console.log("Country of Production: " + JSON.parse(body)["Country"]);
+              console.log("Language: " + JSON.parse(body)["Language"]);
+              console.log("Plot: " + JSON.parse(body)["Plot"]);
+              console.log("Actors: " + JSON.parse(body)["Actors"]);
+            };
 
-        // Parse the body of the site and recover just the imdbRating
-        // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
-        console.log("Title: " + value);
-        console.log("Year: " + JSON.parse(body)["Year"]);
-        console.log("Rating: " + JSON.parse(body)["imdbRating"]);
-        console.log("Country of Production: " + JSON.parse(body)["Country"]);
-        console.log("Language: " + JSON.parse(body)["Language"]);
-        console.log("Plot: " + JSON.parse(body)["Plot"]);
-        console.log("Actors: " + JSON.parse(body)["Actors"]);
-      };
-
-          // // if user doesn't enter a value value will be set to Mr.Nobody
-          // else {
-          //
-          // }
       });
+
       // // if user doesn't enter a value value will be set to Mr.Nobody
     } else {
       request(urlDefault, function (error, response, body) {
