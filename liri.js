@@ -67,7 +67,10 @@ function spotify() {
     console.log(data);
     console.log("///////Data.tracks///////")
     var spotifyCall = data.tracks;
+    var test = data.value;
     console.log(spotifyCall);
+    console.log("/////////////////");
+    console.log(test);
 
 });
 }
@@ -82,7 +85,7 @@ var movieName = value;
 var url = 'http://www.omdbapi.com/?t=' + movieName + '&y=&plot=short&r=json';
 
 
-    request(url, function (error, resonse,body) {
+    request(url, function (error, response,body) {
 
       console.log(body);
       // If the request is successful (i.e. if the response status code is 200)
@@ -91,14 +94,11 @@ var url = 'http://www.omdbapi.com/?t=' + movieName + '&y=&plot=short&r=json';
         // Parse the body of the site and recover just the imdbRating
         // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
         console.log("The movie's rating is: " + JSON.parse(body)["imdbRating"])
-      }
+      };
 
-          // if user doesn't enter a value value will be set to Mr.Nobody
-          else {
-
-          }  
+          // // if user doesn't enter a value value will be set to Mr.Nobody
+          // else {
+          //
+          // }
       });
-
-
-    })
-}
+    }
