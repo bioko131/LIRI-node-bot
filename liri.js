@@ -33,20 +33,26 @@ function twitter(){
   // npm package
   var Twitter = require('twitter');
   // assigning the keys
-  var client = new Twitter(twitterKeys);
+  var client = new Twitter ({
+		consumer_key: twitterKeys.consumer_key,
+		consumer_secret: twitterKeys.consumer_secret,
+		access_token_key: twitterKeys.access_token_key,
+		access_token_secret: twitterKeys.access_token_secret
+  });
   // what to search for
   var params = {screen_name: 'creativelaurels'};
-  console.log(params);
+  //console.log(params);
 
   // using the npm
-  client.get('statuses/user_timeline', params, function(error, tweets, response) {
-  console.log("Here");
+  client.get('statuses/user_timeline', params, function(error, tweets) {
     //if error, log it, else log the tweets
     if (error) {
       console.log(error);
     }
     else {
-      console.log(tweets);
+      for(i=0; i< tweets.length; i++){
+        console.log((i+1) + ". " + tweets[i].text);
+      }
     }
   });
 }
@@ -57,8 +63,8 @@ function spotify() {
   //npm package
   var spotify = require('spotify');
 
-  spotify.search({type: 'track', query: value, }, function(err, data) {
-    if ( err ) {
+  spotify.search({type: 'track', query: value || 'ace of base the sign'}, function(err, data) {
+    if (err) {
         console.log('Error occurred: ' + err);
         return;
     }
@@ -66,7 +72,7 @@ function spotify() {
     console.log("/////////Data////////")
     console.log(data);
     console.log("///////Data.tracks///////")
-    var spotifyCall = data.tracks;
+    var spotifyCall = data.tracks.items[0];
     var test = data.value;
     console.log(spotifyCall);
     console.log("/////////////////");
@@ -86,11 +92,9 @@ var movieDefault = "Mr.Nobody";
 var url = 'http://www.omdbapi.com/?t=' + movieName + '&y=&plot=short&r=json';
 var urlDefault = 'http://www.omdbapi.com/?t=' + movieDefault + '&y=&plot=short&r=json';
 
-  // if the user entered
+ // if the user entered a title, search that
  if (movieName != null) {
     request(url, function (error, response, body) {
-
-      //console.log(body);
       // If the request is successful
       if (!error && response.statusCode == 200) {
               // Parse the body and pull for each attribute
@@ -101,30 +105,22 @@ var urlDefault = 'http://www.omdbapi.com/?t=' + movieDefault + '&y=&plot=short&r
               console.log("Language: " + JSON.parse(body)["Language"]);
               console.log("Plot: " + JSON.parse(body)["Plot"]);
               console.log("Actors: " + JSON.parse(body)["Actors"]);
-            };
+            };//end of if
+      });//end of request
 
-      });
-
-      // // if user doesn't enter a value value will be set to Mr.Nobody
+    // if user doesn't enter a value, value will be set to Mr.Nobody
     } else {
       request(urlDefault, function (error, response, body) {
-
-        //console.log(body);
         // If the request is successful (i.e. if the response status code is 200)
         if (!error && response.statusCode == 200) {
-
-          // Parse the body of the site and recover just the imdbRating
-          // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
-          console.log("Title: " + movieDefault);
-          console.log("Year: " + JSON.parse(body)["Year"]);
-          console.log("Rating: " + JSON.parse(body)["imdbRating"]);
-          console.log("Country of Production: " + JSON.parse(body)["Country"]);
-          console.log("Language: " + JSON.parse(body)["Language"]);
-          console.log("Plot: " + JSON.parse(body)["Plot"]);
-          console.log("Actors: " + JSON.parse(body)["Actors"]);
-        };
-
-        });
-
+              console.log("Title: " + movieDefault);
+              console.log("Year: " + JSON.parse(body)["Year"]);
+              console.log("Rating: " + JSON.parse(body)["imdbRating"]);
+              console.log("Country of Production: " + JSON.parse(body)["Country"]);
+              console.log("Language: " + JSON.parse(body)["Language"]);
+              console.log("Plot: " + JSON.parse(body)["Plot"]);
+              console.log("Actors: " + JSON.parse(body)["Actors"]);
+            };//end of if
+      });//end of request
     } // end of else
   } // end of movie()
