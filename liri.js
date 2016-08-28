@@ -50,7 +50,10 @@ function twitter(){
       console.log(error);
     }
     else {
+      // for loop to run through the length of my account's tweets
+      console.log("\n/////////////////TWEET ME////////////////\n");
       for(i=0; i< tweets.length; i++){
+        // adds a number and dot before to show order
         console.log((i+1) + ". " + tweets[i].text);
       }
     }
@@ -68,16 +71,26 @@ function spotify() {
         console.log('Error occurred: ' + err);
         return;
     }
-
-    console.log("/////////Data////////")
-    console.log(data);
-    console.log("///////Data.tracks///////")
+    else {
+    //console.log("/////////Data////////")
+    //console.log(data);
+    //console.log("///////Data.tracks.items///////")
     var spotifyCall = data.tracks.items[0];
-    var test = data.value;
-    console.log(spotifyCall);
-    console.log("/////////////////");
-    console.log(test);
+    //console.log(spotifyCall);
+    //console.log("/////////spotifyCall.artists[0].name////////");
 
+// if no error, show me the information from the API
+    console.log("\n/////////////////SPOTIFY THIS////////////////\n");
+    var artist = spotifyCall.artists[0].name;
+    console.log("Artist: " + artist);
+    var song = spotifyCall.name;
+    console.log("Song name: " + song);
+    var preview = spotifyCall.preview_url;
+    console.log("Preview Link: " + preview);
+    var album = spotifyCall.album.name;
+    console.log("Album: " + album);
+
+}
 });
 }
 
@@ -98,6 +111,7 @@ var urlDefault = 'http://www.omdbapi.com/?t=' + movieDefault + '&y=&plot=short&r
       // If the request is successful
       if (!error && response.statusCode == 200) {
               // Parse the body and pull for each attribute
+              console.log("\n/////////////////MOVIE THIS////////////////\n")
               console.log("Title: " + value);
               console.log("Year: " + JSON.parse(body)["Year"]);
               console.log("Rating: " + JSON.parse(body)["imdbRating"]);
